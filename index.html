@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Simulator - Made By Manav</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            background: #1a1a2e;
+        }
+
+        #gameCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        #dashboard {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(180deg, rgba(20, 30, 50, 0.95) 0%, rgba(10, 15, 25, 0.98) 100%);
+            color: #00ff88;
+            padding: 15px 20px;
+            z-index: 100;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            border-top: 2px solid #00ff88;
+            box-shadow: 0 -5px 20px rgba(0, 255, 136, 0.3);
+        }
+
+        .dash-item {
+            background: rgba(0, 255, 136, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid rgba(0, 255, 136, 0.3);
+        }
+
+        .dash-label {
+            font-size: 11px;
+            color: #88ccff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .dash-value {
+            font-size: 20px;
+            font-weight: bold;
+            color: #00ff88;
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+        }
+
+        #minimap {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 250px;
+            height: 250px;
+            z-index: 100;
+            border: 3px solid #00ff88;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+            background: rgba(10, 15, 25, 0.9);
+        }
+
+        #minimap .leaflet-container {
+            background: rgba(10, 15, 25, 0.9);
+        }
+
+        .controls-info {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(20, 30, 50, 0.95);
+            color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            z-index: 100;
+            border: 2px solid #00ff88;
+            max-width: 250px;
+        }
+
+        .controls-info h3 {
+            color: #00ff88;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .controls-info p {
+            font-size: 12px;
+            margin: 5px 0;
+            color: #ccc;
+        }
+
+        .key {
+            display: inline-block;
+            background: #333;
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin: 2px;
+            font-weight: bold;
+            color: #00ff88;
+        }
+
+        #message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(20, 30, 50, 0.98);
+            color: #00ff88;
+            padding: 30px 50px;
+            border-radius: 15px;
+            z-index: 200;
+            border: 3px solid #00ff88;
+            text-align: center;
+            display: none;
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
+        }
+
+        #message h2 {
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        #message p {
+            font-size: 16px;
+            color: #ccc;
+        }
+
+        .credit {
+            position: fixed;
+            bottom: 120px;
+            right: 20px;
+            color: #00ff88;
+            font-size: 14px;
+            z-index: 100;
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+            font-weight: bold;
+        }
+
+        #playerList {
+            position: fixed;
+            top: 280px;
+            right: 20px;
+            background: rgba(20, 30, 50, 0.95);
+            color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            z-index: 100;
+            border: 2px solid #00ff88;
+            min-width: 200px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        #playerList h4 {
+            color: #00ff88;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .player-entry {
+            font-size: 12px;
+            padding: 5px;
+            border-bottom: 1px solid rgba(0, 255, 136, 0.3);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .player-entry:last-child {
+            border-bottom: none;
+        }
+
+        .status-good { color: #00ff88; }
+        .status-warning { color: #ffaa00; }
+        .status-bad { color: #ff4444; }
+
+        #altitudeIndicator {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 200px;
+            background: rgba(20, 30, 50, 0.95);
+            border: 2px solid #00ff88;
+            border-radius: 5px;
+            z-index: 100;
+        }
+
+        #altitudeBar {
+            position: absolute;
+            bottom: 5px;
+            left: 5px;
+            width: 26px;
+            height: 0%;
+            background: linear-gradient(180deg, #00ff88 0%, #0088ff 100%);
+            border-radius: 3px;
+            transition: height 0.1s;
+        }
+
+        #speedIndicator {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%) rotate(-90deg);
+            width: 200px;
+            height: 40px;
+            background: rgba(20, 30, 50, 0.95);
+            border: 2px solid #00ff88;
+            border-radius: 5px;
+            z-index: 100;
+        }
+
+        #speedBar {
+            position: absolute;
+            left: 5px;
+            top: 5px;
+            width: 0%;
+            height: 26px;
+            background: linear-gradient(90deg, #00ff88 0%, #ffaa00 50%, #ff4444 100%);
+            border-radius: 3px;
+            transition: width 0.1s;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas"></canvas>
+    
+    <div id="minimap"></div>
+    
+    <div class="controls-info">
+        <h3>🎮 Controls</h3>
+        <p><span class="key">W</span> / <span class="key">↑</span> Pitch Down</p>
+        <p><span class="key">S</span> / <span class="key">↓</span> Pitch Up</p>
+        <p><span class="key">A</span> / <span class="key">←</span> Roll Left</p>
+        <p><span class="key">D</span> / <span class="key">→</span> Roll Right</p>
+        <p><span class="key">Q</span> Yaw Left</p>
+        <p><span class="key">E</span> Yaw Right</p>
+        <p><span class="key">Shift</span> Throttle Up</p>
+        <p><span class="key">Ctrl</span> Throttle Down</p>
+        <p><span class="key">Space</span> Brake</p>
+        <p><span class="key">R</span> Reset Position</p>
+        <p><span class="key">C</span> Change View</p>
+        <p><span class="key">L</span> Toggle Landing Gear</p>
+    </div>
+
+    <div id="playerList">
+        <h4>👥 Online Players</h4>
+        <div id="players"></div>
+    </div>
+
+    <div id="altitudeIndicator">
+        <div id="altitudeBar"></div>
+    </div>
+
+    <div id="speedIndicator">
+        <div id="speedBar"></div>
+    </div>
+
+    <div class="credit">✈️ Made By Manav</div>
+
+    <div id="dashboard">
+        <div class="dash-item">
+            <div class="dash-label">Speed</div>
+            <div class="dash-value"><span id="speed">0</span> km/h</div>
+        </div>
+        <div class="dash-item">
+            <div class="dash-label">Altitude</div>
+            <div class="dash-value"><span id="altitude">0</span> ft</div>
+        </div>
+        <div class="dash-item">
+            <div class="dash-label">Heading</div>
+            <div class="dash-value"><span id="heading">0</span>°</div>
+        </div>
+        <div class="dash-item">
+            <div class="dash-label">Throttle</div>
+            <div class="dash-value"><span id="throttle">0</span>%</div>
+        </div>
+        <div class="dash-item">
+            <div class="dash-label">Vertical Speed</div>
+            <div class="dash-value"><span id="vspeed">0</span> ft/m</div>
+        </div>
+        <div class="dash-item">
+            <div class="dash-label">Fuel</div>
+            <div class="dash-value"><span id="fuel">100</span>%</div>
+        </div>
+        <div class="dash-item">
+            <div class="dash-label">Status</div>
+            <div class="dash-value" id="flightStatus">Grounded</div>
+        </div>
+        <div class="dash-item">
+            <div class="dash-label">Location</div>
+            <div class="dash-value" id="location">Loading...</div>
+        </div>
+    </div>
+
+    <div id="message">
+        <h2 id="msgTitle">Welcome!</h2>
+        <p id="msgText">Use controls to fly. Good luck!</p>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>

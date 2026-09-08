@@ -1,60 +1,43 @@
 ```
-# G-code build artifacts
-gcode-files/*.gcode
+# G-code files (generated/compiled)
+genos-figure/gcode/*.gcode
 
-# Compiled and build artifacts
-*.pyc
-__pycache__/
-*.o
-*.obj
-*.out
-dist/
+# Build artifacts
 build/
-target/
+dist/
 
 # Dependencies
+node_modules/
 .venv/
 venv/
-node_modules/
-.julia/
-.zig-cache/
+__pycache__/
+*.egg-info/
 
-# Logs and temp files
+# Logs and temporary files
 *.log
 *.tmp
 *.swp
-*.swo
 
-# Environment variables
+# Environment files
 .env
 .env.local
 *.env.*
 
-# Editors
+# Editor/IDE files
 .vscode/
 .idea/
+*.swo
 
-# OS generated files
+# OS files
 .DS_Store
 Thumbs.db
 
 # Coverage reports
 coverage/
 htmlcov/
-.coverage
+*.coverage
 
-# Python specific
-*.pyc
-__pycache__/
-*.pyo
-*.pyd
-.Python
-*.so
-.coverage
-.pytest_cache/
-.mypy_cache/
-
-# Compressed files
+# Compression files
 *.zip
 *.gz
 *.tar
@@ -73,8 +56,4 @@ __pycache__/
 *.Z
 *.lz
 *.lzo
-*.tar.gz
-*.tar.bz2
-*.tar.xz
-*.tar.zst
 ```

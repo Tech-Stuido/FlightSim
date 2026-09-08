@@ -1,0 +1,337 @@
+; Genos Armor Plates - One Punch Man
+; Optimized G-code for 3D Printing
+; Part: Additional armor plates (shoulder, chest, leg armor)
+; Material: PLA (White/Silver)
+; Layer Height: 0.2mm
+; Infill: 20%
+; Supports: Minimal
+; Estimated Print Time: 3-4 hours
+; Printer: Ender 3 / Prusa i3 MK3 compatible
+; NOTE: This file contains multiple armor pieces on one build plate
+
+G21 ; Set units to millimeters
+G90 ; Use absolute coordinates
+M82 ; Extruder absolute mode
+M140 S60 ; Set bed temperature to 60°C
+M104 S205 ; Set nozzle temperature to 205°C
+M190 S60 ; Wait for bed temperature
+M105 ; Report temperatures
+G28 ; Home all axes
+G1 Z10 F3000
+G1 X10 Y10 F3000
+G92 E0
+G1 E10 F1200
+
+; === LAYER 1 - Base Layer ===
+G1 Z0.2 F3000
+M106 S150
+
+; Build plate brim
+G1 X30 Y30 E3 F1500
+G1 X170 Y30 E20
+G1 X170 Y170 E20
+G1 X30 Y170 E20
+G1 X30 Y30 E20
+
+; === SHOULDER ARMOR LEFT ===
+G1 Z0.20 F2000
+; Left shoulder plate outline
+G1 X50 Y50 E8 F1200
+G1 X70 Y50 E4
+G1 X75 Y55 E2
+G1 X75 Y70 E3
+G1 X70 Y75 E2
+G1 X50 Y75 E4
+G1 X45 Y70 E2
+G1 X45 Y55 E3
+G1 X50 Y50 E2
+
+; Shoulder armor internal detail
+G1 X55 Y55 E3 F1400
+G1 X65 Y55 E3
+G1 X65 Y70 E3
+G1 X55 Y70 E3
+G1 X55 Y55 E3
+
+; === SHOULDER ARMOR RIGHT ===
+; Right shoulder plate outline
+G1 X130 Y50 E8 F1200
+G1 X150 Y50 E4
+G1 X155 Y55 E2
+G1 X155 Y70 E3
+G1 X150 Y75 E2
+G1 X130 Y75 E4
+G1 X125 Y70 E2
+G1 X125 Y55 E3
+G1 X130 Y50 E2
+
+; Shoulder armor internal detail
+G1 X135 Y55 E3 F1400
+G1 X145 Y55 E3
+G1 X145 Y70 E3
+G1 X135 Y70 E3
+G1 X135 Y55 E3
+
+; === CHEST ARMOR PLATE ===
+; Central chest plate
+G1 X90 Y80 E6 F1200
+G1 X110 Y80 E4
+G1 X115 Y85 E2
+G1 X115 Y100 E3
+G1 X110 Y105 E2
+G1 X90 Y105 E4
+G1 X85 Y100 E2
+G1 X85 Y85 E3
+G1 X90 Y80 E2
+
+; Chest plate ridge detail
+G1 X95 Y85 E3 F1400
+G1 X105 Y85 E3
+G1 X105 Y100 E3
+G1 X95 Y100 E3
+G1 X95 Y85 E3
+
+; Center energy core cutout alignment
+G1 X100 Y92 E2 F1400
+G2 X100 Y92 I0 J-5 E6 ; Alignment marker
+
+; === LEG ARMOR PLATE LEFT ===
+; Left leg armor
+G1 X50 Y110 E6 F1200
+G1 X70 Y110 E4
+G1 X75 Y115 E2
+G1 X75 Y130 E3
+G1 X70 Y135 E2
+G1 X50 Y135 E4
+G1 X45 Y130 E2
+G1 X45 Y115 E3
+G1 X50 Y110 E2
+
+; Leg armor vent details
+G1 X55 Y115 E2 F1400
+G1 X65 Y115 E2
+G1 X65 Y130 E3
+G1 X55 Y130 E2
+G1 X55 Y115 E2
+
+; Horizontal vent lines
+G1 X55 Y120 E2
+G1 X65 Y120 E2
+G1 X55 Y125 E2
+G1 X65 Y125 E2
+
+; === LEG ARMOR PLATE RIGHT ===
+; Right leg armor
+G1 X130 Y110 E6 F1200
+G1 X150 Y110 E4
+G1 X155 Y115 E2
+G1 X155 Y130 E3
+G1 X150 Y135 E2
+G1 X130 Y135 E4
+G1 X125 Y130 E2
+G1 X125 Y115 E3
+G1 X130 Y110 E2
+
+; Leg armor vent details
+G1 X135 Y115 E2 F1400
+G1 X145 Y115 E2
+G1 X145 Y130 E3
+G1 X135 Y130 E2
+G1 X135 Y115 E2
+
+; Horizontal vent lines
+G1 X135 Y120 E2
+G1 X145 Y120 E2
+G1 X135 Y125 E2
+G1 X145 Y125 E2
+
+; === LAYER 2-20 - Building Up Armor Thickness ===
+G1 Z0.40 F3000
+; Shoulder left
+G1 X50 Y50 E7 F1500
+G1 X70 Y50 E4
+G1 X75 Y55 E2
+G1 X75 Y70 E3
+G1 X70 Y75 E2
+G1 X50 Y75 E4
+G1 X45 Y70 E2
+G1 X45 Y55 E3
+G1 X50 Y50 E2
+
+; Shoulder right
+G1 X130 Y50 E7 F1500
+G1 X150 Y50 E4
+G1 X155 Y55 E2
+G1 X155 Y70 E3
+G1 X150 Y75 E2
+G1 X130 Y75 E4
+G1 X125 Y70 E2
+G1 X125 Y55 E3
+G1 X130 Y50 E2
+
+; Chest plate
+G1 X90 Y80 E5 F1500
+G1 X110 Y80 E4
+G1 X115 Y85 E2
+G1 X115 Y100 E3
+G1 X110 Y105 E2
+G1 X90 Y105 E4
+G1 X85 Y100 E2
+G1 X85 Y85 E3
+G1 X90 Y80 E2
+
+; Leg left
+G1 X50 Y110 E5 F1500
+G1 X70 Y110 E4
+G1 X75 Y115 E2
+G1 X75 Y130 E3
+G1 X70 Y135 E2
+G1 X50 Y135 E4
+G1 X45 Y130 E2
+G1 X45 Y115 E3
+G1 X50 Y110 E2
+
+; Leg right
+G1 X130 Y110 E5 F1500
+G1 X150 Y110 E4
+G1 X155 Y115 E2
+G1 X155 Y130 E3
+G1 X150 Y135 E2
+G1 X130 Y135 E4
+G1 X125 Y130 E2
+G1 X125 Y115 E3
+G1 X130 Y110 E2
+
+; === LAYER 21-40 - Adding Detail Grooves ===
+G1 Z4.20 F3000
+; Shoulder details (grooves)
+G1 X52 Y52 E6 F1400
+G1 X68 Y52 E4
+G1 X73 Y57 E2
+G1 X73 Y68 E2
+G1 X68 Y73 E2
+G1 X52 Y73 E4
+G1 X47 Y68 E2
+G1 X47 Y57 E2
+G1 X52 Y52 E2
+
+G1 X132 Y52 E6 F1400
+G1 X148 Y52 E4
+G1 X153 Y57 E2
+G1 X153 Y68 E2
+G1 X148 Y73 E2
+G1 X132 Y73 E4
+G1 X127 Y68 E2
+G1 X127 Y57 E2
+G1 X132 Y52 E2
+
+; Chest details
+G1 X92 Y82 E4 F1400
+G1 X108 Y82 E4
+G1 X113 Y87 E2
+G1 X113 Y98 E2
+G1 X108 Y103 E2
+G1 X92 Y103 E4
+G1 X87 Y98 E2
+G1 X87 Y87 E2
+G1 X92 Y82 E2
+
+; Leg details
+G1 X52 Y112 E4 F1400
+G1 X68 Y112 E4
+G1 X73 Y117 E2
+G1 X73 Y128 E2
+G1 X68 Y133 E2
+G1 X52 Y133 E4
+G1 X47 Y128 E2
+G1 X47 Y117 E2
+G1 X52 Y112 E2
+
+G1 X132 Y112 E4 F1400
+G1 X148 Y112 E4
+G1 X153 Y117 E2
+G1 X153 Y128 E2
+G1 X148 Y133 E2
+G1 X132 Y133 E4
+G1 X127 Y128 E2
+G1 X127 Y117 E2
+G1 X132 Y112 E2
+
+; === LAYER 41-60 - Mounting Points ===
+G1 Z8.20 F3000
+; Add mounting pegs and slots
+; Shoulder mounts
+G1 X60 Y52 E2 F1400
+G2 X60 Y52 I0 J-2 E2 ; Peg left
+G1 X140 Y52 E2
+G2 X140 Y52 I0 J-2 E2 ; Peg right
+
+; Chest mounts
+G1 X95 Y92 E2 F1400
+G2 X95 Y92 I0 J-2 E2 ; Mount point 1
+G1 X105 Y92 E2
+G2 X105 Y92 I0 J-2 E2 ; Mount point 2
+
+; Leg mounts
+G1 X60 Y122 E2 F1400
+G2 X60 Y122 I0 J-2 E2 ; Peg left leg
+G1 X140 Y122 E2
+G2 X140 Y122 I0 J-2 E2 ; Peg right leg
+
+; === FINAL LAYERS - Smooth Surface ===
+G1 Z12.00 F3000
+; Final smoothing pass on all plates
+G1 X52 Y52 E5 F1200
+G1 X68 Y52 E4
+G1 X68 Y68 E4
+G1 X52 Y68 E4
+G1 X52 Y52 E4
+
+G1 X132 Y52 E5 F1200
+G1 X148 Y52 E4
+G1 X148 Y68 E4
+G1 X132 Y68 E4
+G1 X132 Y52 E4
+
+G1 X92 Y82 E4 F1200
+G1 X108 Y82 E4
+G1 X108 Y98 E4
+G1 X92 Y98 E4
+G1 X92 Y82 E4
+
+G1 X52 Y112 E4 F1200
+G1 X68 Y112 E4
+G1 X68 Y128 E4
+G1 X52 Y128 E4
+G1 X52 Y112 E4
+
+G1 X132 Y112 E4 F1200
+G1 X148 Y112 E4
+G1 X148 Y128 E4
+G1 X132 Y128 E4
+G1 X132 Y112 E4
+
+; Retract and park
+G1 E-5 F1800
+G1 Z60 F3000
+G1 X0 Y0 F5000
+M104 S0
+M140 S0
+M107
+M84
+
+; End of G-code
+; Post-processing: Remove all 5 armor plates from build plate
+; Sand mounting pegs for smooth fit
+; Test fit on corresponding body parts
+; Paint silver/white as desired
+
+; === PARTS INCLUDED ===
+; 1x Left Shoulder Armor
+; 1x Right Shoulder Armor
+; 1x Chest Armor Plate
+; 1x Left Leg Armor
+; 1x Right Leg Armor
+
+; Assembly: Attach with small screws or epoxy
+; Optional: Add weathering effects for battle-damaged look
